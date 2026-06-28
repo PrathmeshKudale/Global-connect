@@ -110,8 +110,8 @@ function gameQuiz(){
     }
     const c=cases[i];
     
-    // Sleek, dark-mode native UI replacing the clunky borders
-    $('#gameBoard').innerHTML='<h2 style="margin: 0 0 8px; font-size: 22px; color: #fff;">Evaluate this Prompt</h2><p style="font-size: 18px; color: #dbeafe; font-style: italic; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; max-width: 90%; line-height: 1.5;">"'+c.p+'"</p><div class="game-buttons" id="btnGroup"><button class="choice good" data-a="good">✅ Good Prompt</button><button class="choice bad" data-a="bad">❌ Bad Prompt</button></div><div id="caseFeedback" style="display:none; margin-top: 20px; background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);"></div>';
+    // Added the clickable logo right at the top
+    $('#gameBoard').innerHTML='<a href="https://claude.ai/share/38c97a96-1bdf-4a8b-b99f-058b09da528d" target="_blank" style="display:inline-block; margin-bottom:12px; transition: transform 0.2s;"><img src="logoprompt.jpeg" alt="Game Logo" style="height: 48px; border-radius: 8px;"></a><h2 style="margin: 0 0 8px; font-size: 22px; color: #fff;">Evaluate this Prompt</h2><p style="font-size: 18px; color: #dbeafe; font-style: italic; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; max-width: 90%; line-height: 1.5;">"'+c.p+'"</p><div class="game-buttons" id="btnGroup"><button class="choice good" data-a="good">✅ Good Prompt</button><button class="choice bad" data-a="bad">❌ Bad Prompt</button></div><div id="caseFeedback" style="display:none; margin-top: 20px; background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);"></div>';
     
     $('#gameInfo').textContent='Case #'+(i+1)+' of '+cases.length+': Is this a GOOD or BAD prompt?';
     
