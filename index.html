@@ -485,7 +485,7 @@ window.addEventListener('message',function(e){
   if(!e.data||typeof e.data.gcGameHeight!=='number')return;
   $$('.game-frame-wrap iframe').forEach(f=>{
     if(f.contentWindow===e.source){
-      const h=Math.max(300,Math.min(400,Math.round(e.data.gcGameHeight)+4));
+      const h=Math.max(300,Math.min(800,Math.round(e.data.gcGameHeight)+4));
       f.style.height=h+'px';
     }
   });
