@@ -518,13 +518,11 @@ function gameBalance(){
   const frame=$('#balanceFrame');
   frame.src='data:text/html;base64,'+AI_DETECTIVE_GAME_B64;
 }
-function gamePrompt(){const rounds=[['Explain AI to Class 7','audience'],['Answer in table format','format'],['Act like a science teacher','role'],['Do not use difficult words','constraint'],['Make 5 quiz questions','task']];let i=0,score=0;function show(){const r=rounds[i%rounds.length];$('#gameBoard').innerHTML='<h2>'+r[0]+'</h2><p>Which prompt part is this?</p><div class="game-buttons">'+['role','task','audience','format','constraint'].map(x=>'<button class="choice" data-p="'+x+'">'+x+'</button>').join('')+'</div>';$('#gameInfo').textContent='Strong prompts are built from clear parts.';$$('.choice').forEach(b=>b.onclick=()=>{score+=b.dataset.p===r[1]?20:0;i++;setScore(score);show()})}show()}
 function gameHtmlDebugger(){
   $('#gameStage .game-frame-wrap').innerHTML='<iframe id="htmlDebuggerFrame" title="HTML Debugger Pro" loading="lazy"></iframe>';
   const frame=$('#htmlDebuggerFrame');
   frame.src='data:text/html;base64,'+HTML_DEBUGGER_GAME_B64;
 }
-function gameMemory(){const colors=['🔵','🟣','🟢','🟡'];let seq=[],step=0,score=0;function next(){seq.push(Math.floor(Math.random()*4));step=0;$('#gameBoard').innerHTML='<h2>Remember this pattern</h2><p style="font-size:42px">'+seq.map(i=>colors[i]).join(' ')+'</p><button class="choice" id="readyBtn">I remember</button>';$('#gameInfo').textContent='After clicking, repeat the pattern.';$('#readyBtn').onclick=ask}function ask(){$('#gameBoard').innerHTML='<h2>Repeat the pattern</h2><div class="game-buttons">'+colors.map((c,i)=>'<button class="choice" data-c="'+i+'" style="font-size:28px">'+c+'</button>').join('')+'</div>';$$('.choice').forEach(b=>b.onclick=()=>{if(+b.dataset.c===seq[step]){step++;if(step===seq.length){score+=seq.length*10;setScore(score);next()}}else{score=Math.max(0,score-10);setScore(score);seq=[];next()}})}next()}
 function gameRepairShop(){
   $('#gameStage .game-frame-wrap').innerHTML='<iframe id="repairShopFrame" title="Website Repair Shop" loading="lazy"></iframe>';
   const frame=$('#repairShopFrame');
