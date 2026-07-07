@@ -206,6 +206,44 @@ function session2QuizSim(){$('#simStage').innerHTML='<h3>Session 2 Quiz</h3><p>A
 function promptSorterSim(){$('#simStage').innerHTML='<h3>The Prompt Sorter</h3><p>Sort prompts: normal chat or Game Maker?</p><div class="game-frame-wrap"><iframe id="promptSorterFrame" title="The Prompt Sorter" loading="lazy"></iframe></div>';$('#promptSorterFrame').src='data:text/html;base64,'+PROMPT_SORTER_B64}
 function renderSlider(id){const vals=$$('[data-sim-slider]').map(x=>+x.value),avg=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);let title='',msg='';if(id==='neural'){title='Prediction confidence '+avg+'%';msg='More useful examples and better weights usually improve AI predictions.'}else if(id==='fair'){const fair=100-Math.abs(vals[0]-vals[1]);title='Fairness score '+fair+'%';msg='Balanced data helps AI treat groups more fairly. Accuracy estimate: '+avg+'%.'}else{title=avg>70?'AI action: Emergency mode':avg>45?'AI action: Balanced control':'AI action: Eco saving mode';msg='AI uses sensor data to recommend a safe smart-city action.'}$('#simVisual').innerHTML='<h2>'+title+'</h2><div class="meter"><i style="width:'+avg+'%"></i></div><p>'+vals.join(' • ')+'</p>';$('#simResult').textContent=msg}
 function promptSim(){$('#simStage').innerHTML='<h3>Prompt Builder</h3><div class="sim-shell"><div class="controls"><label>Role<input id="pRole" value="friendly AI teacher"></label><label>Task<input id="pTask" value="explain machine learning"></label><label>Audience<input id="pAudience" value="Class 8 students"></label><label>Format<input id="pFormat" value="5 easy bullet points"></label><label>Safety<input id="pSafety" value="include one safe AI rule"></label><button class="btn primary" id="buildPrompt">Build Prompt</button></div><div class="result" id="promptOut"></div></div>';const run=()=>$('#promptOut').textContent='You are a '+$('#pRole').value+'. Please '+$('#pTask').value+' for '+$('#pAudience').value+'. Use '+$('#pFormat').value+', one school example, simple words, and '+$('#pSafety').value+'.';$('#buildPrompt').onclick=run;run()}
+function visionSim(){
+  const SIZE=5;
+  $('#simStage').innerHTML='<h3>Pixel Vision</h3><div class="sim-shell"><div class="controls"><p style="font-weight:900;margin:0 0 10px">Draw a pattern, then ask the AI to classify it.</p><div class="tile-grid" id="pixelGrid"></div><button class="btn primary" id="classifyBtn" style="margin-top:14px">Classify pattern</button><button class="btn secondary" id="clearPixelBtn" style="margin-top:8px">Clear grid</button></div><div><div class="visual" id="simVisual"><h2>Draw something!</h2><p>Click squares to toggle pixels on and off, then classify your pattern.</p></div><div class="result" id="simResult">Tip: try a filled block, a symmetric shape, and a scattered pattern to see different results.</div></div></div>';
+  const grid=$('#pixelGrid');
+  const cells=[];
+  for(let i=0;i<SIZE*SIZE;i++){
+    const c=document.createElement('div');
+    c.className='tile';
+    c.onclick=()=>{c.classList.toggle('on')};
+    grid.appendChild(c);
+    cells.push(c);
+  }
+  $('#clearPixelBtn').onclick=()=>{cells.forEach(c=>c.classList.remove('on'))};
+  $('#classifyBtn').onclick=()=>{
+    const on=cells.filter(c=>c.classList.contains('on'));
+    const count=on.length;
+    let label='Pattern', msg='';
+    if(count===0){
+      label='Empty canvas';
+      msg='No pixels are switched on, so the AI has nothing to classify yet.';
+    }else{
+      let symmetric=true;
+      for(let r=0;r<SIZE;r++){
+        for(let c=0;c<SIZE;c++){
+          const leftOn=cells[r*SIZE+c].classList.contains('on');
+          const rightOn=cells[r*SIZE+(SIZE-1-c)].classList.contains('on');
+          if(leftOn!==rightOn)symmetric=false;
+        }
+      }
+      const density=count/(SIZE*SIZE);
+      if(density>0.6){label='Dense blob';msg='Most pixels are on, so the AI reads this as a solid, filled shape.';}
+      else if(symmetric){label='Symmetric pattern';msg='Left and right sides match, so the AI flags this as a balanced, symmetric shape (like a face or letter).';}
+      else{label='Irregular pattern';msg='The pixels are scattered without symmetry, so the AI treats this as a unique, irregular shape.';}
+    }
+    $('#simVisual').innerHTML='<h2>'+label+'</h2><p>'+count+' of '+(SIZE*SIZE)+' pixels are on.</p>';
+    $('#simResult').textContent=msg;
+  };
+}
 function neuralSim(){
 $('#simStage').innerHTML = `
 <div class="nn-container">
