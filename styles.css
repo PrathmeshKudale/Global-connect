@@ -32,7 +32,16 @@
 .story-cta{display:flex;gap:12px;flex-wrap:wrap}
 .story-join-btn{justify-content:center;padding:14px 22px}
 .story-hero-media{position:relative}
-.story-hero-image{width:100%;height:auto;display:block;border-radius:6px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.story-hero-media{
+    width: 100%;
+}
+
+.story-hero-image{
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain; /* Shows the entire image */
+}
 .btn.ghost{background:transparent;color:var(--brand);border:1px solid transparent}
 .btn.ghost:hover{background:#f1f4ff}
 .auth-back{background:none;border:0;color:var(--muted);font-weight:900;padding:0 0 14px;text-align:left}
